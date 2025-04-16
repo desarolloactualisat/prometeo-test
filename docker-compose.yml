@@ -3,18 +3,20 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV}
+        - VITE_API_URL=${VITE_API_URL}
+      target: ${NODE_ENV:-development}
     ports:
-      - "3000:3000"
+      - "${FRONT_PORT:-5173}:5173"
     volumes:
-      # Monta el código para que cualquier cambio en el host se vea en el contenedor
       - ./front:/app
-      # Opcional: monta un volumen anónimo para node_modules, para evitar conflictos
       - /app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
+      - VITE_API_URL=${VITE_API_URL}
     depends_on:
       - back
-
   back:
     build:
       context: ./back
@@ -33,6 +35,8 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     # Para desarrollo se usa --reload (ya configurado en el CMD del Dockerfile)
+    depends_on:
+      - mariadb
 
   mariadb:
     image: mariadb:latest
