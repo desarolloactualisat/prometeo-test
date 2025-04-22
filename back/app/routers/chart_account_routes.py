@@ -36,9 +36,9 @@ def create_chart_account(account: dict, db: Session = Depends(get_db)):
 @router.get("/api/chart-accounts")
 def get_all_chart_accounts(db: Session = Depends(get_db)):
     try:
-        query = select(chart_of_accounts)
-        result = db.execute(query).fetchall()
-        return [dict(row) for row in result]
+        stmt = select(chart_of_accounts)
+        result = db.execute(stmt).mappings().all()
+        return result
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 

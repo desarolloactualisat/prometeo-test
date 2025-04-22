@@ -17,7 +17,7 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   const fullUrl = new URL(config.url ?? "", config.baseURL ?? "").toString();
-  console.log("Request:", config.method?.toUpperCase(), fullUrl, config.data);
+  // console.log("Request:", config.method?.toUpperCase(), fullUrl, config.data);
   return config;
 });
 
@@ -191,7 +191,7 @@ class APICore {
    */
   create = (url: string, data: any) => {
     return axiosInstance.post(url, data).then((res) => {
-      console.log(res, 'res');
+      // console.log(res, 'res');
       return res;
     });
   };
