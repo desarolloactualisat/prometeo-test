@@ -1,7 +1,7 @@
 import {axiosInstance} from "../api/apiCore";
 
 // Set your API URL—ensure it's defined in your .env (e.g. VITE_API_URL=http://localhost:8000)
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8002";
 
 // Configure the axiosInstance instance
 axiosInstance.defaults.baseURL = API_URL;
