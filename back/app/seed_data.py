@@ -1,100 +1,119 @@
 # app/seed_data.py
+# ------------------------------------------------------------------
+# Inserta datos iniciales para el modelo RBAC:
+#   • modules  – uno por cada “tabla‑módulo” de la app
+#   • profiles – perfil superadmin
+#   • permissions – acceso total del superadmin a todos los módulos
+#   • users – usuario administrador con contraseña bcrypt
+# ------------------------------------------------------------------
 
-from app.database import SessionLocal, engine
-from app.models import Base, Module, Profile, Permission, User
 from sqlalchemy.exc import IntegrityError
 from passlib.context import CryptContext
 
+from app.database import SessionLocal, engine
+from app.models import Base, Module, Profile, Permission, User
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-def seed_db():
-    # Lista de las tablas que consideras 'módulos' (tal como mencionaste)
-    table_names = [
-        "usuarios", 
-        "cuentas_contables", 
-        "perfiles", 
-        "modulos", 
-        "permisos",
-        "tipos_gastos", 
-        "detalle_gastos", 
-        "catalogo_productos",
-        "cuentas_bancarias", 
-        "document_financial_operation",
-        "comprobantes", 
-        "documento_purchaseorder", 
-        "pedimentos",
-        "factura_cg", 
-        "desglose_cg"
-    ]
 
+# Si decides que “módulo” == “tabla”, mantén la lista sincronizada con tu esquema:
+MODULE_NAMES = [
+    "users",
+    "chart_of_accounts",
+    "profiles",
+    "modules",
+    "permissions",
+    "expense_types",
+    "expense_details",
+    "product_catalog",
+    "bank_accounts",
+    "financial_operations",
+    "invoices",
+    "purchase_orders",
+    "import_declarations",
+    "cg_invoice",
+    "cg_breakdown",
+]
+
+
+def seed_db() -> None:
     db = SessionLocal()
-    
-    try:
-        # 1) Crear módulos (si no existen)
-        modules_in_db = db.query(Module).all()
-        existing_module_names = {m.name for m in modules_in_db}
 
-        for table_name in table_names:
-            if table_name not in existing_module_names:
-                new_mod = Module(
-                    name=table_name,
-                    description=f"Módulo para la tabla {table_name}"
+    try:
+        # ----------------------------------------------------------
+        # 1) MÓDULOS
+        # ----------------------------------------------------------
+        existing = {m.name for m in db.query(Module.name).all()}
+
+        for name in MODULE_NAMES:
+            if name not in existing:
+                db.add(
+                    Module(
+                        name=name,
+                        description=f"Logical module for '{name}' table",
+                    )
                 )
-                db.add(new_mod)
         db.commit()
 
-        # 2) Crear el perfil superadmin (si no existe)
+        # ----------------------------------------------------------
+        # 2) PERFIL SUPERADMIN
+        # ----------------------------------------------------------
         superadmin = db.query(Profile).filter_by(name="superadmin").first()
         if not superadmin:
             superadmin = Profile(
                 name="superadmin",
-                description="Perfil con todos los permisos"
+                description="Perfil con acceso total a todos los módulos",
             )
             db.add(superadmin)
             db.commit()
 
-        # 3) Otorgar permisos a superadmin para todos los módulos
+        # ----------------------------------------------------------
+        # 3) PERMISOS DEL SUPERADMIN
+        # ----------------------------------------------------------
         all_modules = db.query(Module).all()
-        for module in all_modules:
-            perm = db.query(Permission).filter_by(
-                profile_id=superadmin.id,
-                module_id=module.id
-            ).first()
-            if not perm:
-                new_perm = Permission(
-                    profile_id=superadmin.id,
-                    module_id=module.id,
-                    can_access=True,
-                    can_add=True,
-                    can_edit=True,
-                    can_delete=True,
+        for mod in all_modules:
+            exists = (
+                db.query(Permission)
+                .filter_by(profile_id=superadmin.id, module_id=mod.id)
+                .first()
+            )
+            if not exists:
+                db.add(
+                    Permission(
+                        profile_id=superadmin.id,
+                        module_id=mod.id,
+                        can_access=True,
+                        can_add=True,
+                        can_edit=True,
+                        can_delete=True,
+                    )
                 )
-                db.add(new_perm)
         db.commit()
 
-        # 4) Crear usuario 'admin' con perfil superadmin (si no existe)
-        admin_user = db.query(User).filter_by(username="admin").first()
-        if not admin_user:
-            hashed_pwd = pwd_context.hash("admin123")
-            admin_user = User(
+        # ----------------------------------------------------------
+        # 4) USUARIO ADMIN
+        # ----------------------------------------------------------
+        if not db.query(User).filter_by(username="admin").first():
+            admin = User(
                 profile_id=superadmin.id,
                 username="admin",
                 first_name="Super",
                 last_name="Admin",
                 email="admin@prometeo.com",
-                password=hashed_pwd
+                hashed_password=pwd_context.hash("admin123"),
             )
-            db.add(admin_user)
+            db.add(admin)
             db.commit()
 
-        print("Seed completado exitosamente.")
+        print("✅  Seed completado correctamente.")
 
     except IntegrityError as e:
         db.rollback()
-        print("Ocurrió un error de integridad al hacer el seed:", e)
+        print("❌  Error de integridad en el seed:", e.orig)
     finally:
         db.close()
 
+
 if __name__ == "__main__":
-    # Crear las tablas en caso de que no existan (sólo si usas el declarative Base)
+    # Crea todas las tablas si aún no existen (útil en desarrollo)
     Base.metadata.create_all(bind=engine)
     seed_db()

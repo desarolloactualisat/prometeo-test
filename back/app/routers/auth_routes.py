@@ -37,7 +37,7 @@ def login(credentials: LoginCredentials, db: Session = Depends(get_db)):
     user = db.execute(query).fetchone()
 
     # Verificar si el usuario existe y si la contraseña es válida
-    if not user or not verify_password(credentials.password, user.password):
+    if not user or not verify_password(credentials.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     # Crear un token JWT para el usuario

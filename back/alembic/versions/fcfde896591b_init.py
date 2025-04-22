@@ -1,8 +1,8 @@
-"""migracion inicial
+"""init
 
-Revision ID: 486418d28f9e
+Revision ID: fcfde896591b
 Revises: 
-Create Date: 2025-04-15 06:42:43.472251
+Create Date: 2025-04-21 20:38:37.664834
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision: str = '486418d28f9e'
+revision: str = 'fcfde896591b'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -25,19 +25,22 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('account', sa.String(length=20), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('customs_documents',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('date', sa.DateTime(), nullable=False),
-    sa.Column('visa_reference', sa.String(length=30), nullable=True),
-    sa.Column('customs_document', sa.String(length=20), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('account')
     )
     op.create_table('expense_types',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('expense_type', sa.String(length=100), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('expense_type')
+    )
+    op.create_table('import_declarations',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
+    sa.Column('visa_reference', sa.String(length=30), nullable=True),
+    sa.Column('number', sa.String(length=20), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('number')
     )
     op.create_table('modules',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -45,13 +48,14 @@ def upgrade() -> None:
     sa.Column('description', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_modules_name'), 'modules', ['name'], unique=True)
     op.create_table('product_catalog',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('item', sa.String(length=30), nullable=False),
     sa.Column('description', sa.String(length=80), nullable=True),
     sa.Column('tariff_code', sa.String(length=15), nullable=True),
-    sa.Column('duty_ciu', sa.Float(), nullable=True),
-    sa.Column('duty_us', sa.Float(), nullable=True),
+    sa.Column('duty_ciu', sa.DECIMAL(precision=8, scale=2), nullable=True),
+    sa.Column('duty_us', sa.DECIMAL(precision=8, scale=2), nullable=True),
     sa.Column('comments', sa.String(length=250), nullable=True),
     sa.Column('sat_product_code', sa.String(length=15), nullable=True),
     sa.Column('sat_code_description', sa.String(length=100), nullable=True),
@@ -59,42 +63,63 @@ def upgrade() -> None:
     sa.Column('sat_unit_description', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_product_catalog_item'), 'product_catalog', ['item'], unique=True)
     op.create_table('profiles',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_profiles_name'), 'profiles', ['name'], unique=True)
     op.create_table('bank_accounts',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('bank', sa.String(length=60), nullable=False),
     sa.Column('account_number', sa.String(length=20), nullable=False),
     sa.Column('currency', sa.String(length=5), nullable=True),
-    sa.Column('account_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['account_id'], ['chart_of_accounts.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('chart_account_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['chart_account_id'], ['chart_of_accounts.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('account_number')
     )
+    op.create_index(op.f('ix_bank_accounts_chart_account_id'), 'bank_accounts', ['chart_account_id'], unique=False)
     op.create_table('expense_details',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('expense_type_id', sa.Integer(), nullable=False),
     sa.Column('code', sa.String(length=10), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
-    sa.Column('account_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['account_id'], ['chart_of_accounts.id'], ),
+    sa.Column('chart_account_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['chart_account_id'], ['chart_of_accounts.id'], ),
     sa.ForeignKeyConstraint(['expense_type_id'], ['expense_types.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('code', name='uq_expense_details_code')
     )
+    op.create_index(op.f('ix_expense_details_chart_account_id'), 'expense_details', ['chart_account_id'], unique=False)
+    op.create_index(op.f('ix_expense_details_expense_type_id'), 'expense_details', ['expense_type_id'], unique=False)
     op.create_table('permissions',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=False),
     sa.Column('module_id', sa.Integer(), nullable=False),
-    sa.Column('can_access', sa.Boolean(), nullable=False),
-    sa.Column('can_add', sa.Boolean(), nullable=False),
-    sa.Column('can_edit', sa.Boolean(), nullable=False),
-    sa.Column('can_delete', sa.Boolean(), nullable=False),
-    sa.ForeignKeyConstraint(['module_id'], ['modules.id'], ),
-    sa.ForeignKeyConstraint(['profile_id'], ['profiles.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('can_access', sa.Boolean(), server_default='0', nullable=False),
+    sa.Column('can_add', sa.Boolean(), server_default='0', nullable=False),
+    sa.Column('can_edit', sa.Boolean(), server_default='0', nullable=False),
+    sa.Column('can_delete', sa.Boolean(), server_default='0', nullable=False),
+    sa.ForeignKeyConstraint(['module_id'], ['modules.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['profile_id'], ['profiles.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('profile_id', 'module_id', name='uq_permissions_profile_module')
+    )
+    op.create_index('ix_permissions_profile_module', 'permissions', ['profile_id', 'module_id'], unique=False)
+    op.create_table('purchase_orders',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('po_number', sa.String(length=20), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.Column('weight', sa.Integer(), nullable=True),
+    sa.Column('import_declaration_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['import_declaration_id'], ['import_declarations.id'], ),
+    sa.ForeignKeyConstraint(['product_id'], ['product_catalog.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('po_number')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -103,23 +128,13 @@ def upgrade() -> None:
     sa.Column('first_name', sa.String(length=20), nullable=False),
     sa.Column('last_name', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=60), nullable=False),
-    sa.Column('password', sa.String(length=200), nullable=False),
+    sa.Column('hashed_password', sa.String(length=200), nullable=False),
     sa.ForeignKeyConstraint(['profile_id'], ['profiles.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
     )
-    op.create_table('financial_operations',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('po_id', sa.Integer(), nullable=True),
-    sa.Column('bank_id', sa.Integer(), nullable=True),
-    sa.Column('operation_type', sa.Enum('Income', 'Expense'), nullable=False),
-    sa.Column('date', sa.DateTime(), nullable=False),
-    sa.Column('concept', sa.String(length=150), nullable=True),
-    sa.Column('reference', sa.String(length=60), nullable=True),
-    sa.Column('amount', sa.Float(), nullable=False),
-    sa.Column('invoice_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['bank_id'], ['bank_accounts.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
+    op.create_index(op.f('ix_users_profile_id'), 'users', ['profile_id'], unique=False)
+    op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
     op.create_table('invoices',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('po_id', sa.Integer(), nullable=True),
@@ -130,12 +145,15 @@ def upgrade() -> None:
     sa.Column('visa_description', sa.String(length=100), nullable=True),
     sa.Column('client_reference', sa.String(length=60), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=False),
-    sa.Column('customs_document_id', sa.Integer(), nullable=True),
+    sa.Column('import_declaration_id', sa.Integer(), nullable=True),
     sa.Column('supplier', sa.String(length=60), nullable=True),
     sa.Column('containers', sa.String(length=30), nullable=True),
     sa.Column('expense_detail_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['expense_detail_id'], ['expense_details.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['import_declaration_id'], ['import_declarations.id'], ),
+    sa.ForeignKeyConstraint(['po_id'], ['purchase_orders.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('file_name', 'file_extension', name='uq_invoices_file')
     )
     op.create_table('cg_breakdown',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -144,41 +162,46 @@ def upgrade() -> None:
     sa.Column('code', sa.String(length=10), nullable=True),
     sa.Column('description', sa.String(length=100), nullable=True),
     sa.Column('expense_type', sa.String(length=100), nullable=True),
-    sa.Column('foreign_amount', sa.Float(), nullable=True),
-    sa.Column('amount', sa.Float(), nullable=False),
-    sa.Column('balance_amount', sa.Float(), nullable=True),
+    sa.Column('foreign_amount', sa.DECIMAL(precision=14, scale=2), nullable=True),
+    sa.Column('amount', sa.DECIMAL(precision=14, scale=2), nullable=False),
+    sa.Column('balance_amount', sa.DECIMAL(precision=14, scale=2), nullable=True),
     sa.Column('invoice_folio', sa.String(length=30), nullable=True),
     sa.Column('invoice_id', sa.Integer(), nullable=False),
-    sa.Column('invoice_status', sa.Enum('Matches', 'DoesNotMatch', 'Unidentified'), nullable=False),
+    sa.Column('invoice_status', sa.Enum('Matches', 'DoesNotMatch', 'Unidentified'), server_default='Unidentified', nullable=False),
     sa.Column('approval_user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['approval_user_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['expense_detail_id'], ['expense_details.id'], ),
     sa.ForeignKeyConstraint(['invoice_id'], ['invoices.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('purchase_orders',
+    op.create_index(op.f('ix_cg_breakdown_invoice_id'), 'cg_breakdown', ['invoice_id'], unique=False)
+    op.create_table('financial_operations',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('fo_id', sa.Integer(), nullable=True),
-    sa.Column('po_number', sa.String(length=10), nullable=False),
+    sa.Column('po_id', sa.Integer(), nullable=True),
+    sa.Column('bank_id', sa.Integer(), nullable=True),
+    sa.Column('operation_type', sa.Enum('Income', 'Expense'), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=False),
-    sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('weight', sa.Integer(), nullable=True),
-    sa.Column('customs_document_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['fo_id'], ['financial_operations.id'], ),
-    sa.ForeignKeyConstraint(['product_id'], ['product_catalog.id'], ),
+    sa.Column('concept', sa.String(length=150), nullable=True),
+    sa.Column('reference', sa.String(length=60), nullable=True),
+    sa.Column('amount', sa.DECIMAL(precision=14, scale=2), nullable=False),
+    sa.Column('invoice_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['bank_id'], ['bank_accounts.id'], ),
+    sa.ForeignKeyConstraint(['invoice_id'], ['invoices.id'], ),
+    sa.ForeignKeyConstraint(['po_id'], ['purchase_orders.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_financial_operations_bank_id'), 'financial_operations', ['bank_id'], unique=False)
     op.create_table('cg_invoice',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('fo_egress_id', sa.Integer(), nullable=True),
     sa.Column('fo_income_id', sa.Integer(), nullable=True),
     sa.Column('po_id', sa.Integer(), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=False),
-    sa.Column('invoice_folio', sa.String(length=10), nullable=True),
-    sa.Column('invoice_amount', sa.Float(), nullable=False),
-    sa.Column('cg_total', sa.Float(), nullable=False),
-    sa.Column('advance_payment', sa.Float(), nullable=True),
-    sa.Column('refund', sa.Float(), nullable=True),
+    sa.Column('invoice_folio', sa.String(length=20), nullable=True),
+    sa.Column('invoice_amount', sa.DECIMAL(precision=14, scale=2), nullable=False),
+    sa.Column('cg_total', sa.DECIMAL(precision=14, scale=2), nullable=False),
+    sa.Column('advance_payment', sa.DECIMAL(precision=14, scale=2), nullable=True),
+    sa.Column('refund', sa.DECIMAL(precision=14, scale=2), nullable=True),
     sa.Column('cg_status', sa.Enum('Open', 'Closed'), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['fo_egress_id'], ['financial_operations.id'], ),
@@ -194,18 +217,29 @@ def downgrade() -> None:
     """Downgrade schema."""
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('cg_invoice')
-    op.drop_table('purchase_orders')
+    op.drop_index(op.f('ix_financial_operations_bank_id'), table_name='financial_operations')
+    op.drop_table('financial_operations')
+    op.drop_index(op.f('ix_cg_breakdown_invoice_id'), table_name='cg_breakdown')
     op.drop_table('cg_breakdown')
     op.drop_table('invoices')
-    op.drop_table('financial_operations')
+    op.drop_index(op.f('ix_users_username'), table_name='users')
+    op.drop_index(op.f('ix_users_profile_id'), table_name='users')
     op.drop_table('users')
+    op.drop_table('purchase_orders')
+    op.drop_index('ix_permissions_profile_module', table_name='permissions')
     op.drop_table('permissions')
+    op.drop_index(op.f('ix_expense_details_expense_type_id'), table_name='expense_details')
+    op.drop_index(op.f('ix_expense_details_chart_account_id'), table_name='expense_details')
     op.drop_table('expense_details')
+    op.drop_index(op.f('ix_bank_accounts_chart_account_id'), table_name='bank_accounts')
     op.drop_table('bank_accounts')
+    op.drop_index(op.f('ix_profiles_name'), table_name='profiles')
     op.drop_table('profiles')
+    op.drop_index(op.f('ix_product_catalog_item'), table_name='product_catalog')
     op.drop_table('product_catalog')
+    op.drop_index(op.f('ix_modules_name'), table_name='modules')
     op.drop_table('modules')
+    op.drop_table('import_declarations')
     op.drop_table('expense_types')
-    op.drop_table('customs_documents')
     op.drop_table('chart_of_accounts')
     # ### end Alembic commands ###
