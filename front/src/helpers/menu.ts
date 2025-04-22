@@ -15,7 +15,7 @@ const getMenuItems = async (): Promise<MenuItemTypes[]> => {
     const permissions = response.data.permissions;
 
     // Map permissions to menu items and filter out excluded modules
-    const excludedModules = ['modulos', 'perfiles', 'permisos']
+    const excludedModules = ['modules', 'profiles', 'permissions', 'cg_breakdown', 'users']
     const menuItems: MenuItemTypes[] = permissions.reduce((acc: MenuItemTypes[], permission: any) => {
       if (!excludedModules.includes(permission.module_name)) {
         acc.push({

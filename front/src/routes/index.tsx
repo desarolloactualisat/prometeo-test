@@ -25,6 +25,16 @@ const ProjectCreate = React.lazy(() => import('../pages/apps/Project/Create'));
 const ProjectDetail = React.lazy(() => import('../pages/apps/Project/Detail'));
 const ProjectList = React.lazy(() => import('../pages/apps/Project/List'));
 const FacturaCG = React.lazy(() => import('../pages/apps/FacturaCG'));
+const PurchaseOrder = React.lazy(() => import('../pages/apps/PurchaseOrder'));
+const FinancialOperations = React.lazy(() => import('../pages/apps/FinancialOperations'));
+const BankAccounts = React.lazy(() => import('../pages/apps/BankAccounts'));
+const ExpenseTypes = React.lazy(() => import('../pages/apps/ExpenseTypes'));
+const Invoices = React.lazy(() => import('../pages/apps/Invoices'));
+const ProductCatalog = React.lazy(() => import('../pages/apps/ProductCatalog'));
+const ImportDeclarations = React.lazy(() => import('../pages/apps/ImportDeclarations'));
+const ExpenseDetails = React.lazy(() => import('../pages/apps/ExpenseDetails'));
+const ChartOfAccounts = React.lazy(() => import('../pages/apps/ChartOfAccounts'));
+
 
 // extra pages 
 const Starter = React.lazy(() => import('../pages/extra/Starter'));
@@ -180,12 +190,84 @@ const kanbanAppRoutes: RoutesProps = {
 };
 
 const facturaAppRoutes: RoutesProps = {
-  path: "/factura_cg",
+  path: "/cg_invoice",
   name: "Factura",
   route: PrivateRoute,
   roles: ["Admin"],
   icon: "factura",
   element: <FacturaCG />,
+}
+const bankAppRoutes: RoutesProps = {
+  path: "/bank_accounts",
+  name: "bank-accounts",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "bank-accounts",
+  element: <BankAccounts />,
+}
+const ChartOfAccountsAppRoutes: RoutesProps = {
+  path: "/chart_of_accounts",
+  name: "chart-of-accounts",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "chart-of-accounts",
+  element: <ChartOfAccounts />,
+}
+const ExpenseTypesAppRoutes: RoutesProps = {
+  path: "/expense_types",
+  name: "expense-types",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "expense-types",
+  element: <ExpenseTypes />,
+}
+const ExpenseDetailsAppRoutes: RoutesProps = {
+  path: "/expense_details",
+  name: "bank-accounts",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "expense-details",
+  element: <ExpenseDetails />,
+}
+const PurchaseOrderAppRoutes: RoutesProps = {
+  path: "/purchase_orders",
+  name: "purchase-order",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "purchase-order",
+  element: <PurchaseOrder />,
+}
+const FinancialOperationsAppRoutes: RoutesProps = {
+  path: "/financial_operations",
+  name: "financial_operations",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "financial_operations",
+  element: <FinancialOperations />,
+}
+const InvoicesAppRoutes: RoutesProps = {
+  path: "/invoices",
+  name: "invoices",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "invoices",
+  element: <Invoices />,
+}
+const productCatalogAppRoutes: RoutesProps = {
+  path: "/product_catalog",
+  name: "product-catalog",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "product-catalog",
+  element: <ProductCatalog />,
+}
+const ImportDeclarationsAppRoutes: RoutesProps = {
+  path: "/import_declarations",
+  name: "import-declarations",
+  route: PrivateRoute,
+  roles: ["Admin"],
+  icon: "import-declarations",
+  element: <ImportDeclarations />,
 }
 
 const projectAppRoutes: RoutesProps = {
@@ -216,7 +298,7 @@ const projectAppRoutes: RoutesProps = {
   ]
 };
 
-const appRoutes = [calendarAppRoutes, ticketsAppRoutes, projectAppRoutes, kanbanAppRoutes, fileAppRoutes, facturaAppRoutes];
+const appRoutes = [ExpenseDetailsAppRoutes, ExpenseTypesAppRoutes, bankAppRoutes, calendarAppRoutes, ticketsAppRoutes, projectAppRoutes, kanbanAppRoutes, fileAppRoutes, facturaAppRoutes, PurchaseOrderAppRoutes, FinancialOperationsAppRoutes, InvoicesAppRoutes, productCatalogAppRoutes, ImportDeclarationsAppRoutes, ChartOfAccountsAppRoutes];
 
 // pages
 const customPagesRoutes = {

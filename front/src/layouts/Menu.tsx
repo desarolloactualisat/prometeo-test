@@ -98,7 +98,7 @@ const MenuItemLink = ({ item, className }: SubMenus) => {
           <i className={item.icon} />
         </span>
       )}
-      <span className='menu-text capitalize'>{item.label.replace('_', ' ')}</span>
+      <span className='menu-text capitalize'>{item.label.replace(/_/g, ' ')}</span>
     </Link>
   )
 }
