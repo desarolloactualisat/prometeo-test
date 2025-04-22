@@ -19,7 +19,6 @@ export const login = async (email: string, password: string): Promise<any> => {
   try {
     // Call the backend login endpoint
     const response = await axiosInstance.post("/api/auth/login/", { email, password });
-    console.log(response)
     // Check for expected data
     if (!response.data || !response.data.access_token) {
       throw new Error("Invalid login response");
@@ -33,8 +32,6 @@ export const login = async (email: string, password: string): Promise<any> => {
 
     // Set the Authorization header for subsequent requests
     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${response.data.access_token}`;
-
-    console.log("Login successful:", response.data); //TODO: remove this line
     return response.data;
   } catch (error: any) {
     console.error("Login error:", error.message || error);

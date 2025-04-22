@@ -144,7 +144,6 @@ export default function BankAccounts() {
     e.preventDefault();
     try {
       const response = await createBankAccount(formData);
-       console.log('newAccount', response);
       setBankAccounts((prev) => [...prev, {...formData, id: response.id}]);
       setFormData({
         bank: '',
@@ -161,6 +160,25 @@ export default function BankAccounts() {
     try {
       const response = await updateBankAccount(idToDelete!, formData);
       console.log(response)
+     
+      const updatedAccounts = bankAccounts.map(account => {
+        if (account.id === idToDelete) {
+          return {
+            ...account,
+            ...formData
+          }
+        }
+        return account;
+      })
+      setFormData({
+        bank: '',
+        account_number: '',
+        currency: '',
+        chart_account_id: ''
+      });
+      setBankAccounts(updatedAccounts);
+      setMode('Add');
+      setIdToDelete(undefined);
     } catch (error) {
       console.error("Error updating bank account:", error);
     }
@@ -265,7 +283,6 @@ export default function BankAccounts() {
           </div>
           <button className="btn block bg-primary text-white mt-8">{mode} Bank Account</button>
         </div>
-        {JSON.stringify(formData)}
       </form>
       <SimpleModal isModalOpen={isModalOpen} handleModal={() => setIsModalOpen(!isModalOpen)} confirmDelete={async () => {
         await delBankAccount();

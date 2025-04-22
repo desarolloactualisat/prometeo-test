@@ -38,7 +38,6 @@ function* login({ payload: { email, password } }: UserData): SagaIterator {
   try {
     // yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, {email, password}));
     const data = yield call(loginApi, email, password);
-    console.log(data, "data");
     yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, data.user));
   } catch (error: any) {
     yield put(authApiResponseError(AuthActionTypes.LOGIN_USER, error.message));

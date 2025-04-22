@@ -1,0 +1,382 @@
+[
+  {
+    "item": "50447",
+    "description": "SELENIUM AMINO ACID CHELATE",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "0.15",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12141910 - Selenio se",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50162",
+    "description": "XANTHAN GUM 40 MESH - FOOD GRADE (MEX)",
+    "tariff_code": "3913900600",
+    "duty_cn_in_uk": "0.07",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12161808 - Agentes de suspensión",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50472",
+    "description": "Xanthan gum 200Mesh Amylase free",
+    "tariff_code": "3913900600",
+    "duty_cn_in_uk": "0.07",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12161808 - Agentes de suspensión",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "51216",
+    "description": "Tara Gum HV",
+    "tariff_code": "1302399900",
+    "duty_cn_in_uk": "0.1",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12161808 - Agentes de suspensión",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50313",
+    "description": "XANTHAN GUM 80 MESH - FOOD GRADE (MEX)",
+    "tariff_code": "3913900600",
+    "duty_cn_in_uk": "0.07",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12161808 - Agentes de suspensión",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "692",
+    "description": "Calcium Ascorbate",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162200 - Anti-oxidantes",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "667",
+    "description": "SODIUM ERYTHORBATE",
+    "tariff_code": "2932201199",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162200 - Anti-oxidantes",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50637",
+    "description": "L-Glutathione reduced",
+    "tariff_code": "2930909999",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162200 - Anti-oxidantes",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "626",
+    "description": "SODIUM ASCORBATE",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162200 - Anti-oxidantes",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "613",
+    "description": "VITAMIN C (ASCORBIC ACID) REGULAR",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162201 - Ácido ascórbico",
+    "uom_code": "GRM - gramo"
+  },
+  {
+    "item": "935",
+    "description": "VITAMIN C (SF 97)",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162201 - Ácido ascórbico",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "613",
+    "description": "VITAMIN C (ASCORBIC ACID) REGULAR",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162201 - Ácido ascórbico",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "937",
+    "description": "VITAMIN C 97.5%(Coated)",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162201 - Ácido ascórbico",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "939",
+    "description": "VITAMIN C (ASCORBIC ACID) 100 MESH",
+    "tariff_code": "2936270201",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162201 - Ácido ascórbico",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "1013",
+    "description": "Coenzyme Q10",
+    "tariff_code": "2914620100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12162212 - Ubicquinona o coenzima q10",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "973",
+    "description": "POTASSIUM SORBATE GRANULAR",
+    "tariff_code": "2916199903",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "974",
+    "description": "POTASSIUM SORBATE - POWDER",
+    "tariff_code": "2916199903",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "610",
+    "description": "Sodium Benzoate",
+    "tariff_code": "2916310100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "1293",
+    "description": "SORBIC ACID POWDER",
+    "tariff_code": "2916199901",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "1568",
+    "description": "CITRIC ACID ANHYDROUS 30-100MESH",
+    "tariff_code": "2918140100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50613",
+    "description": "Sodium Benzoate Powder",
+    "tariff_code": "2916310100",
+    "duty_cn_in_uk": "0.05",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164501 - Preservativos de alimentos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50416",
+    "description": "VANILLIN SOLVAY",
+    "tariff_code": "2912410100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50414",
+    "description": "153D02 MANGO FLAVOR N&A",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50404",
+    "description": "158D09 FRUIT PUNCH FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50417",
+    "description": "ETHYL VANILLIN RHODIA",
+    "tariff_code": "2912420100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50374",
+    "description": "121D20 MOLTEN CHOCOLATE FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50393",
+    "description": "122P62 VANILLA TYPE FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50365",
+    "description": "NAT BLOOD ORANGE FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50403",
+    "description": "Aldehyde C18(Gamma nonalactone)",
+    "tariff_code": "2932201199",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50475",
+    "description": "20121 Red Velvet Cake Flavor",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50422",
+    "description": "MANDARIN OIL RED",
+    "tariff_code": "3301190200",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50420",
+    "description": "211D19 ART STRAWBERRY FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50511",
+    "description": "Orange Flavor N&A (Prinova Mexico ONLY)",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "50885",
+    "description": "22270 Vanilla Ice Cream Nat And Art Flavor",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "23560",
+    "description": "ART GRAPE FLAVOR",
+    "tariff_code": "2106909999",
+    "duty_cn_in_uk": "",
+    "duty_us": "0",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "992",
+    "description": "VANILLIN (CHINESE)",
+    "tariff_code": "2912410100",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "994",
+    "description": "ETHYL MALTOL - FCC",
+    "tariff_code": "2932999999",
+    "duty_cn_in_uk": "0",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12164502 - sabores o extractos",
+    "uom_code": "KGM - kilogramo"
+  },
+  {
+    "item": "885",
+    "description": "JOJOBA OIL - COLOURLESS WATERLIGHT",
+    "tariff_code": "1515909900",
+    "duty_cn_in_uk": "0.1",
+    "duty_us": "",
+    "comments": "",
+    "sat_code": "12181602 - Aceites naturales",
+    "uom_code": "KGM - kilogramo"
+  }
+]

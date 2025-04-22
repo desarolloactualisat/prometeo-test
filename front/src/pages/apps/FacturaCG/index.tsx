@@ -115,7 +115,8 @@ export default function FacturaCG() {
       <div className="card mt-8">
         <div className="card-header">
           <div className="flex justify-between items-center">
-            <h4 className="card-title">Example</h4>
+            <h4 className="card-title">
+            Verified Expenses</h4>
           </div>
         </div>
         <div>

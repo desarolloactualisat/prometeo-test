@@ -119,7 +119,7 @@ export default function FinancialOperations() {
                 {files.map((file, index) => (
                   <li key={index} className="text-sm">
                     {file.name} ({(file.size / 1024).toFixed(2)} KB)
-                    <span className="text-pink-900 font-bold text-xs">TODO: allow to remove files</span>
+                    <span className="text-pink-900 font-bold text-xs">TODO: allow to remove files</span> //TODO: allow to remove files
                   </li>
                 ))}
               </ul>
