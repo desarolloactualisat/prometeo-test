@@ -31,18 +31,18 @@ CMD ["yarn", "dev"]
 # ---------------------------------------------------
 # Etapa de build para producción
 # ---------------------------------------------------
-FROM deps AS build
+#FROM deps AS build
 
 # Copiamos el resto del código
-COPY . .
+#COPY . .
 
 # Build de producción con TypeScript + Vite
-RUN yarn build
+#RUN yarn build
 
 # ---------------------------------------------------
 # Etapa final: servir con Nginx
 # ---------------------------------------------------
-FROM nginx:stable-alpine AS production
+#FROM nginx:stable-alpine AS production
 
 # Eliminamos la configuración por defecto de Nginx
 #RUN rm /etc/nginx/conf.d/default.conf
@@ -51,11 +51,11 @@ FROM nginx:stable-alpine AS production
 #COPY nginx.conf /etc/nginx/conf.d/
 
 # Copiamos los assets estáticos generados
-COPY --from=build /app/dist /usr/share/nginx/html
+#COPY --from=build /app/dist /usr/share/nginx/html
 
 # Exponemos el puerto 80
-EXPOSE 80
+#EXPOSE 80
 
 # Arrancamos Nginx en primer plano
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
   
