@@ -159,12 +159,15 @@ export default function FacturaCG() {
                     })}
                   </tbody>
                 </table>
+
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h5 className="card-title"></h5>
+      <h5 className="card-title mt-8">
+        Documento Disponibles
+      </h5>
     </div>
   );
 }

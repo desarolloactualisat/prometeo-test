@@ -45,10 +45,10 @@ RUN yarn build
 FROM nginx:stable-alpine AS production
 
 # Eliminamos la configuración por defecto de Nginx
-RUN rm /etc/nginx/conf.d/default.conf
+#RUN rm /etc/nginx/conf.d/default.conf
 
 # Copiamos nuestra configuración de Nginx
-COPY nginx.conf /etc/nginx/conf.d/
+#COPY nginx.conf /etc/nginx/conf.d/
 
 # Copiamos los assets estáticos generados
 COPY --from=build /app/dist /usr/share/nginx/html
