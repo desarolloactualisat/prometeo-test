@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react(),],
   define: { 'process.env': {}, },
   server: {
-    allowedHosts: ["prometeo-dev.nlanube.mx"]
+    allowedHosts: ["prometeodev.nlanube.mx"]
   }
 })
