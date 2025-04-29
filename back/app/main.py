@@ -6,7 +6,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://prometeodev.nlanube.mx"],  # Specify your frontend origin
+    allow_origins=["https://prometeodev.nlanube.mx"],  # Specify your frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
